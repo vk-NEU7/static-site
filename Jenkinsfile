@@ -1,8 +1,6 @@
 pipeline {
     environment {
         registry = "vkneu7/test-repo"
-        dockerToken = 'docker-pat'
-        dockerImage = ''
         DOCKER_ID = 'vkneu7'
         DOCKER_PWD = credentials('DOCKER_PWD')
     }
@@ -13,12 +11,16 @@ pipeline {
                 git credentialsId: 'github-pat', branch: 'main', url: 'https://github.com/cyse7125-su24-team10/static-site.git'
             }
         }
-        stage('build and push') {
+        stage('Build and Push') {
             steps {
                 script {
+                    def buildNumber = currentBuild.number
+                    def imageTag = "latest-${buildNumber}"
+
                     sh 'echo $DOCKER_PWD | docker login -u $DOCKER_ID --password-stdin'
-                    sh 'docker buildx create --use --name newbuilder'
-                    sh 'docker buildx build --platform linux/amd64,linux/arm64 -t vkneu7/test-repo:latestyc --push .'
+                    sh 'docker buildx create --use --name newbuilderx --driver docker-container'
+                    sh "docker buildx build --platform linux/amd64,linux/arm64 -t ${registry}:${imageTag} --push ."
+                    sh 'docker buildx rm newbuilderx'
                 }
             }
         }
