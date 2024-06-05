@@ -1,4 +1,5 @@
 # syntax=docker/dockerfile:1
+# hadolint ignore=DL3007
 FROM caddy:latest
 
 # Copy the index.html file to the appropriate directory
