@@ -1,4 +1,4 @@
 :80 {
-    root * /opt
-    file_server
+	root * /opt
+	file_server
 }
