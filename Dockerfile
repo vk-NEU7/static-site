@@ -9,4 +9,4 @@ COPY index.html /opt
 COPY Caddyfile /etc/caddy/Caddyfile
 
 # Expose port 80
-EXPOSE 80
+EXPOSE 8080
