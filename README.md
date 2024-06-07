@@ -1,1 +1,1 @@
-# static-sitex
+# static-site
